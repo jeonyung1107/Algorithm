@@ -1,0 +1,5 @@
+#execution file
+*.exe
+
+#swap file
+*.swp
