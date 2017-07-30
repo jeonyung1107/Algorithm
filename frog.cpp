@@ -17,14 +17,13 @@ int main(){
 	for (int i = 0; i < T; ++i)
 	{
 		/* code */
-		printf("N");
 		scanf("%d",&N[i]);
 		for (int j= 0; j< N[i]; ++j)
 		{
 			/* code */
-			printf("a");
 			scanf("%d",&a[i][j]);
 		}
 		scanf("%d",&K[T]);
 	}
+	
 }

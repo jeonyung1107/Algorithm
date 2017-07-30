@@ -1,5 +1,10 @@
 #execution file
 *.exe
-
+*
+!*.cpp
+!*.c
+!.gitignore
 #swap file
 *.swp
+
+
