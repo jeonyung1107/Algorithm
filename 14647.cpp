@@ -30,24 +30,15 @@ int main(){
 	
 	/*빙고판의 각 수를 입력 받을 때 어느 위치에 저장하느냐에 
 	 * 따라 바로바로 행과 열의 9의 수를 증가시켜준다.*/
-	int one=0;
-	int ten=0;
-	int baek=0;
-	int cheon=0;
 	for(int i = 0; i< n; i++){
 		for(int j = 0; j< m; j++){
 			cin >> bingopan[i][j];
-			one = bingopan[i][j]%10;
-			ten = bingopan[i][j]%100 - one;
-			baek = bingopan[i][j]%1000 - ten -one;
-			cheon = bingopan[i][j]-baek-ten-one;
-
+			int tmp = bingopan[i][j];
 			int cnt_temp = 0;
-			if(one!=0&&one%9==0) cnt_temp++;
-			if(ten!=0&&ten%90==0) cnt_temp++;
-			if(baek!=0&&baek%900==0) cnt_temp++;
-			if(cheon!=0&&cheon%9000==0) cnt_temp++;
 
+			while(tmp>0){
+				if(tmp%10 = 9) cnt_temp++;
+			}
 			row_cnt[i]+=cnt_temp;
 			col_cnt[j]+=cnt_temp;
 			cnt+=cnt_temp;
