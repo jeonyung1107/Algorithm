@@ -14,19 +14,23 @@ queue<int> q;
 vector<int> v;
 
 void insert(int now,int what){
-	for(int i=1; i<MAX; i++){
-		if(graph[now][i] ==1&&is_checked[i]!=1){
-			if(what==BFS){
+	if(what==BFS){
+		for(int i=1; i<MAX; i++){
+			if(graph[now][i] ==1&&is_checked[i]!=1){
 				q.push(i);
 			}
-			else if(what==DFS){
+		}
+	}else if(what==DFS){
+		for(int i=MAX-1;i>0;i--){
+			if(graph[now][i]==1&&is_checked[i]!=1){
 				v.push_back(i);
 			}
 		}
-		is_checked[i] ==1;
 	}
 }	
-
+/*노드 방문을 구현한 함수
+ * 더이상 방문할 노드가 없는 경우 0 반환한다.
+ * 다형성을 이용할 수 있으면 좋겠다.*/
 int pop(int what){
 	int now=0;
 	if(what==BFS&&!q.empty()){
@@ -38,6 +42,7 @@ int pop(int what){
 	}
 	return now;
 }
+/*실제 탐색 수행하는 함수*/
 void search(int start,int what){
 	int now=0;
 	if(what==BFS){
@@ -45,15 +50,16 @@ void search(int start,int what){
 	}else if(what==DFS){
 		v.push_back(start);
 	}
-	is_checked[start]=1;
 	/*now에 0들어오면 멈춤*/
 	while(now = pop(what)){
+		if(is_checked[now]==1) continue;
+		is_checked[now]=1;
 		insert(now,what);
 		cout << now << " ";
 	}
 	cout << endl;
 	for(int i=1;i<MAX;i++){
-		is_checked[i]==0;
+		is_checked[i]=0;
 	}
 }
 
@@ -68,8 +74,8 @@ int main(){
 		graph[s][e] = 1;
 		graph[e][s] = 1;
 	}
-	search(v,BFS);
 	search(v,DFS);
+	search(v,BFS);
 
 	return 0;
 }
