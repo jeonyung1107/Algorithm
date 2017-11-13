@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 using namespace std;
-int query_one(int* arr,int a, int b){
-	int sum=0;
+long long query_one(int* arr,int a, int b){
+	long long sum=0;
 	for(int i = a-1; i<b;i++){
 		sum += arr[i];	
 	}
@@ -14,8 +14,8 @@ int query_one(int* arr,int a, int b){
 	return sum;
 }
 
-int query_two(int*arr, int a, int b, int c, int d){
-	int sum[2] = {0,0};
+long long query_two(int*arr, int a, int b, int c, int d){
+	long long sum[2] = {0,0};
 	for(int i = a-1; i<b; i++){
 		sum[0] +=arr[i];
 	}
