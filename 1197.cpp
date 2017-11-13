@@ -1,3 +1,8 @@
+/*
+ *https://www.acmicpc.net/problem/1197
+ *MST problem
+ *solution: Prim's algorithm
+ * */
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -17,11 +22,11 @@ priority_queue<pair<int, int>,vector<pair<int,int> >,cmp > q;
 vector<int> visit;
 
 int insert(int now){
+	/*loop for current node's adj vector*/
 	for(int i=0; i<graph[now].size();++i){
+		/*check whether the node is arleady visited*/
 		if(visit[graph[now][i].first]==0){
-			if(visit[graph[now][i].first]==0){
 				q.push(graph[now][i]);	
-			}
 		}
 	}
 
@@ -33,6 +38,7 @@ int main(){
 	int v,e;
 	cin >> v >> e;
 	
+	/*1~v node without 0 index*/
 	graph.resize(v+1);
 	visit.assign(v+1,0);
 
@@ -46,6 +52,7 @@ int main(){
 	int now;
 	int now_cost;
 
+	/*first visited node*/
 	q.push(make_pair(1,0));
 	while(!q.empty()){
 		now=q.top().first;
