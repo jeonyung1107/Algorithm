@@ -4,6 +4,8 @@
 
 using namespace std;
 
+#define INF 1234567890
+
 class node{
 	public:
 		int min;
@@ -18,24 +20,23 @@ class node{
 vector<node> tree;
 vector<int> origin;
 
-node buildTree(int now,int start,int end){
+void buildTree(int now,int start,int end){
 
 	if(start==end){
 		tree[now]=node(origin[start],origin[start]);
-		return tree[now];
 	}else{
-		node tmp = buildTree(now*2,start,(start+end)/2);
-		node tmp2 = buildTree(now*2+1,(start+end)/2+1,end);
-		tree[now]=node(min(tmp.min,tmp2.min),max(tmp.max,tmp2.max));
+		int mid = (start + end) /2;
 
-		return tree[now];
+		buildTree(now*2,start,mid);
+		buildTree(now*2+1,mid+1,end);
+		tree[now]=node(min(tree[now*2].min,tree[now*2+1].min),max(tree[now*2].max,tree[now*2+1].max));
 	}
 }
 
 node find(int now,int start,int end,int left, int right){
 
 	if(left>end || right<start){
-		return node(987654321,-1);
+		return node(INF,-1);
 	}
 
 	if(left<=start && end <=right){
