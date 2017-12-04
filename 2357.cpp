@@ -19,6 +19,7 @@ vector<node> tree;
 vector<int> origin;
 
 node buildTree(int now,int start,int end){
+
 	if(start==end){
 		tree[now]=node(origin[start],origin[start]);
 		return tree[now];
@@ -32,17 +33,21 @@ node buildTree(int now,int start,int end){
 }
 
 node find(int now,int start,int end,int left, int right){
+
 	if(left>end || right<start){
 		return node(987654321,-1);
 	}
+
 	if(left<=start && end <=right){
 		return tree[now];
 	}
+
 	int mid =  (start+end)/2;
 	node tmp1 = find(now*2,start,mid,left,right);
 	node tmp2 = find(now*2+1,mid+1,end,left,right);
 
 	node result = node(min(tmp1.min,tmp2.min),max(tmp1.max,tmp2.max));
+
 	return result;
 }
 
