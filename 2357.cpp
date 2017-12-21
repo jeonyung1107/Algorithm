@@ -1,42 +1,44 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 
 using namespace std;
 
 #define INF 1234567890
 
-class node{
-	public:
-		int min;
-		int max;
+int n,m;
+pair<int,int> tree[300000];
+int origin[100000];
 
-		node(int _min, int _max){
-			min = _min;
-			max = _max;
-		}
-};
-
-vector<node> tree;
-vector<int> origin;
+int read_int()
+{
+	int ret = 0;
+	char ch;
+	while((ch = getchar()) >= '0' && ch <= '9') {
+		ret = ret*10 + ch - '0';
+	}
+	return ret;
+}
 
 void buildTree(int now,int start,int end){
 
 	if(start==end){
-		tree[now]=node(origin[start],origin[start]);
+		tree[now]=make_pair(origin[start],origin[start]);
 	}else{
 		int mid = (start + end) /2;
 
 		buildTree(now*2,start,mid);
 		buildTree(now*2+1,mid+1,end);
-		tree[now]=node(min(tree[now*2].min,tree[now*2+1].min),max(tree[now*2].max,tree[now*2+1].max));
+		tree[now]=make_pair(
+				min(tree[now*2].first,tree[now*2+1].first),
+				max(tree[now*2].second,tree[now*2+1].second)
+				);
 	}
 }
 
-node find(int now,int start,int end,int left, int right){
+pair<int,int> find(int now,int start,int end,int left, int right){
 
 	if(left>end || right<start){
-		return node(INF,-1);
+		return make_pair(INF,-1);
 	}
 
 	if(left<=start && end <=right){
@@ -44,30 +46,31 @@ node find(int now,int start,int end,int left, int right){
 	}
 
 	int mid =  (start+end)/2;
-	node tmp1 = find(now*2,start,mid,left,right);
-	node tmp2 = find(now*2+1,mid+1,end,left,right);
+	pair<int,int> tmp1 = find(now*2,start,mid,left,right);
+	pair<int,int> tmp2 = find(now*2+1,mid+1,end,left,right);
 
-	node result = node(min(tmp1.min,tmp2.min),max(tmp1.max,tmp2.max));
-
-	return result;
+	return make_pair(
+			min(tmp1.first,tmp2.first),
+			max(tmp1.second,tmp2.second)
+			);
 }
 
 int main(void){
-	int n,m;
-	cin >>n>>m;
-	tree.assign(4*n,node(0,0));
+	n = read_int();
+	m = read_int();
 
 	for (int i=0;i<n;++i){
-		int tmp;
-		cin >>tmp;
-		origin.push_back(tmp);
+		origin[i]=read_int();
 	}
-	buildTree(1,0,origin.size()-1);	
+
+	buildTree(1,0,n-1);	
 
 	int s,e;
 	for(int i=0; i<m;++i){
-		cin  >>s >>e;
-		node result=find(1,1,origin.size(),s,e);
-		cout <<result.min << result.max<<endl;
+		s = read_int();
+		e = read_int();
+		--s,--e;
+		pair<int,int> result=find(1,0,n-1,s,e);
+		printf("%d %d\n",result.first,result.second);
 	}
 }
