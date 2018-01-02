@@ -1,62 +1,53 @@
-/* 
- * problem: https://www.acmicpc.net/problem/10272
- * algorithm: dynamic programming
- * 
- * not fully understood
- *
- * */
-
-#include <cstdio>
 #include <algorithm>
-#include <cstring>
 #include <cmath>
+#include <cstdio>
+
+#define MAX 512
 
 using namespace std;
 
-#define MAX 555
-
 int t,n;
-double dp[MAX][MAX];
-pair<double,double> dist[MAX];
+pair<double,double> pts[MAX];
+double dp [MAX][MAX];
 
-double getDist(pair<double, double> x, pair<double, double> y){
+
+double getDist(pair<double, double> pt1, pair<double, double> pt2){
 	return sqrt(
-			(x.first-y.first)*(x.first-y.first) + 
-			(x.second-y.second)*(x.second-y.second)
+			(pt1.first-pt2.first)*(pt1.first-pt2.first)+
+			(pt1.second-pt2.second)*(pt1.second-pt2.second)
 			);
 }
 
-double dynamic(int x, int y){
-	if(x ==n-1||y==n-1){
-		if(y != n-1){ return getDist(dist[y], dist[n-1]); }
-		if(x != n-1){ return getDist(dist[x], dist[n-1]); }
-		return 0.0;
-	}
+double minDist(int pt1, int pt2){
+	if(pt1 == n-1){return getDist(pts[pt2],pts[n-1]);}
+	else if(pt2 == n-1){return getDist(pts[pt1],pts[n-1]);}
 
-	if( dp[x][y] != -1.0) return dp[x][y];
-	int nxt = max(x,y) +1;
-	double ret_tmp1 = getDist(dist[x],dist[nxt]) + dynamic(nxt,y);
-	double ret_tmp2 = getDist(dist[y],dist[nxt]) + dynamic(x,nxt);
-	double ret = min(ret_tmp1,ret_tmp2);
-	
-	dp[x][y] = ret;
+	int nxt = max(pt1,pt2) +1;
+
+	if(dp[pt1][pt2]) return dp[pt1][pt2];
+
+	double ret = min(
+			getDist(pts[pt1],pts[nxt]) + minDist(nxt,pt2),
+			getDist(pts[pt2],pts[nxt]) + minDist(pt1,nxt)
+			);
+
+	dp[pt1][pt2] = ret;
 
 	return ret;
 }
-
-int main(){
+int main(void){
 	scanf("%d",&t);
-	for(int i=0; i<t; ++i){
-		for (int j=0; j<MAX; ++j){
-			for (int k=0; k<MAX; ++k){
-				dp[j][k] = -1.0;
+	for(int i=0;i<t;++i){
+		for(int j=0;j<MAX;++j){
+			for (int k=0;k<MAX;++k){
+				dp[j][k]=0; 
 			}
 		}
 		scanf("%d",&n);
-		for(int j=0; j<n; ++j){
-			scanf("%lf%lf",&dist[j].first, &dist[j].second);
-		}
-		printf("%.3lf\n",dynamic(0,0));
+		for(int j=0;j<n;++j){scanf("%lf%lf",&pts[j].first,&pts[j].second);}
+		printf("%.3lf\n",minDist(0,0));
 	}
-	return 0;
+
+
 }
+
