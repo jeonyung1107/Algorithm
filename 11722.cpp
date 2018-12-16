@@ -26,7 +26,6 @@ int main(){
 	init();
 	solve();
 	int max = 0;
-	int test = 0;
 	for(int i=1; i<=n; ++i){
 		if(max < dp[i])max = dp[i];
 	}
