@@ -1,6 +1,5 @@
 #execution file
 *.exe
-*
 !**.java
 !**.cpp
 !**.c
