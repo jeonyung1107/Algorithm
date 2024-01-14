@@ -1,9 +1,9 @@
 #execution file
 *.exe
 *
-!*.java
-!*.cpp
-!*.c
+!**.java
+!**.cpp
+!**.c
 !.gitignore
 #swap file
 *.swp
